@@ -13,7 +13,7 @@ import (
 
 	"github.com/FreePeak/cortex/pkg/server"
 
-	"github.com/FreePeak/db-mcp-server/internal/logger"
+	"github.com/zhaxg/db-mcp-server/internal/logger"
 )
 
 // ToolRegistry structure to handle tool registration

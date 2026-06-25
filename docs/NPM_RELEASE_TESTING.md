@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide explains how to test the npm publish workflow and release automation for `@freepeak/db-mcp-server` before publishing to production.
+This guide explains how to test the npm publish workflow and release automation for `@zhaxg/db-mcp-server` before publishing to production.
 
 ## Architecture
 
@@ -32,7 +32,7 @@ npm install -g /tmp/db-mcp-test/*.tgz
 db-mcp-server --help
 
 # Cleanup after testing
-npm uninstall -g @freepeak/db-mcp-server
+npm uninstall -g @zhaxg/db-mcp-server
 ```
 
 **What this tests:**
@@ -220,11 +220,11 @@ For production installs, the GitHub release must exist first.
 **Solutions:**
 ```bash
 # Check if installed
-npm list -g @freepeak/db-mcp-server
+npm list -g @zhaxg/db-mcp-server
 
 # Reinstall
-npm uninstall -g @freepeak/db-mcp-server
-npm install -g @freepeak/db-mcp-server
+npm uninstall -g @zhaxg/db-mcp-server
+npm install -g @zhaxg/db-mcp-server
 
 # Check npm bin path
 npm bin -g
@@ -323,7 +323,7 @@ make version-bump TYPE=patch
                     ▼
 ┌─────────────────────────────────────────────────────────────┐
 │ 6. User installs:                                            │
-│    npm install -g @freepeak/db-mcp-server                    │
+│    npm install -g @zhaxg/db-mcp-server                    │
 │                                                              │
 │    - npm downloads package from npm registry                 │
 │    - Runs bin/install.js (postinstall hook)                  │
@@ -359,10 +359,10 @@ If a bad version is published:
 
 ```bash
 # Deprecate the version (doesn't remove it)
-npm deprecate @freepeak/db-mcp-server@1.6.3 "Version broken, use 1.6.2"
+npm deprecate @zhaxg/db-mcp-server@1.6.3 "Version broken, use 1.6.2"
 
 # Users can install specific version
-npm install -g @freepeak/db-mcp-server@1.6.2
+npm install -g @zhaxg/db-mcp-server@1.6.2
 
 # Quick fix and republish
 make version-bump TYPE=patch

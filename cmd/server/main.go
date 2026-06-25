@@ -21,13 +21,13 @@ import (
 
 	"github.com/FreePeak/cortex/pkg/server"
 
-	"github.com/FreePeak/db-mcp-server/internal/config"
-	"github.com/FreePeak/db-mcp-server/internal/delivery/mcp"
-	"github.com/FreePeak/db-mcp-server/internal/logger"
-	"github.com/FreePeak/db-mcp-server/internal/repository"
-	"github.com/FreePeak/db-mcp-server/internal/usecase"
-	"github.com/FreePeak/db-mcp-server/pkg/dbtools"
-	pkgLogger "github.com/FreePeak/db-mcp-server/pkg/logger"
+	"github.com/zhaxg/db-mcp-server/internal/config"
+	"github.com/zhaxg/db-mcp-server/internal/delivery/mcp"
+	"github.com/zhaxg/db-mcp-server/internal/logger"
+	"github.com/zhaxg/db-mcp-server/internal/repository"
+	"github.com/zhaxg/db-mcp-server/internal/usecase"
+	"github.com/zhaxg/db-mcp-server/pkg/dbtools"
+	pkgLogger "github.com/zhaxg/db-mcp-server/pkg/logger"
 )
 
 // version set by -ldflags -X main.version=vX.Y.Z during release builds

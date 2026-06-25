@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/FreePeak/db-mcp-server/internal/domain"
-	"github.com/FreePeak/db-mcp-server/internal/logger"
+	"github.com/zhaxg/db-mcp-server/internal/domain"
+	"github.com/zhaxg/db-mcp-server/internal/logger"
 )
 
 // TODO: Improve error handling with custom error types and better error messages

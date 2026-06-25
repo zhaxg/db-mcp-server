@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
 
 jobs:
   release:
@@ -64,6 +65,21 @@ jobs:
             -o release/db_mcp_server-windows-amd64.exe \
             -ldflags="-s -w -X main.version=$VERSION" \
             ./cmd/server
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          IMAGE=ghcr.io/${{ github.repository_owner }}/db-mcp-server
+          docker build -t $IMAGE:$VERSION -t $IMAGE:latest .
+          docker push $IMAGE:$VERSION
+          docker push $IMAGE:latest
 
       - name: Create Release
         uses: softprops/action-gh-release@v1

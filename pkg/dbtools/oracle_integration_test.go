@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/FreePeak/db-mcp-server/pkg/db"
+	"github.com/zhaxg/db-mcp-server/pkg/db"
 )
 
 // TestOracleIntegration tests Oracle database integration with dbtools

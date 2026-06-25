@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/FreePeak/db-mcp-server/pkg/logger"
+	"github.com/zhaxg/db-mcp-server/pkg/logger"
 )
 
 // Tool represents a tool that can be executed by the MCP server

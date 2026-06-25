@@ -94,7 +94,7 @@ docker-build-multiarch:
 	echo "Version: $$VERSION"; \
 	docker buildx create --name multiplatform-builder --use || true; \
 	docker buildx build --platform linux/amd64,linux/arm64 \
-		-t freepeak/db-mcp-server:$$VERSION \
+		-t ghcr.io/zhaxg/db-mcp-server:$$VERSION \
 		--load .; \
 	docker buildx rm multiplatform-builder
 
@@ -115,7 +115,7 @@ docker-stop:
 # This is useful when switching between different architectures (AMD64/ARM64)
 docker-pull-platform:
 	@echo "Pulling the latest Docker image with the correct platform for your system..."
-	docker pull --platform $${DOCKER_PLATFORM:-linux/amd64} freepeak/db-mcp-server:latest
+	docker pull --platform $${DOCKER_PLATFORM:-linux/amd64} ghcr.io/zhaxg/db-mcp-server:latest
 
 # Build and deploy Docker image for current architecture only
 # Usage: make deploy-docker-simple VERSION=v1.6.3 LATEST=true
@@ -126,14 +126,14 @@ deploy-docker-simple:
 	@VERSION=$${VERSION:-v1.6.3}; \
 	LATEST=$${LATEST:-true}; \
 	echo "Version: $$VERSION | Tag as latest: $$LATEST"; \
-	docker build -t freepeak/db-mcp-server:$$VERSION .; \
+	docker build -t ghcr.io/zhaxg/db-mcp-server:$$VERSION .; \
 	if [ "$$LATEST" = "true" ]; then \
-		docker tag freepeak/db-mcp-server:$$VERSION freepeak/db-mcp-server:latest; \
+		docker tag ghcr.io/zhaxg/db-mcp-server:$$VERSION ghcr.io/zhaxg/db-mcp-server:latest; \
 	fi; \
 	echo "To push to Docker Hub, run:"; \
-	echo "docker push freepeak/db-mcp-server:$$VERSION"; \
+	echo "docker push ghcr.io/zhaxg/db-mcp-server:$$VERSION"; \
 	if [ "$$LATEST" = "true" ]; then \
-		echo "docker push freepeak/db-mcp-server:latest"; \
+		echo "docker push ghcr.io/zhaxg/db-mcp-server:latest"; \
 	fi
 
 # Build and deploy multi-platform Docker image (AMD64 and ARM64)
@@ -155,12 +155,12 @@ deploy-docker:
 	docker buildx create --name multiplatform-builder --use || true; \
 	if [ "$$LATEST" = "true" ]; then \
 		docker buildx build --platform linux/amd64,linux/arm64 \
-			-t freepeak/db-mcp-server:$$VERSION \
-			-t freepeak/db-mcp-server:latest \
+			-t ghcr.io/zhaxg/db-mcp-server:$$VERSION \
+			-t ghcr.io/zhaxg/db-mcp-server:latest \
 			--push .; \
 	else \
 		docker buildx build --platform linux/amd64,linux/arm64 \
-			-t freepeak/db-mcp-server:$$VERSION \
+			-t ghcr.io/zhaxg/db-mcp-server:$$VERSION \
 			--push .; \
 	fi; \
 	docker buildx rm multiplatform-builder || true

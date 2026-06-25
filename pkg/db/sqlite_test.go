@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	intLogger "github.com/FreePeak/db-mcp-server/internal/logger"
+	intLogger "github.com/zhaxg/db-mcp-server/internal/logger"
 )
 
 func initLoggerForTests() {

@@ -122,14 +122,14 @@ The DB MCP Server can be deployed in multiple ways to suit different environment
 
 ```bash
 # Pull the latest image
-docker pull freepeak/db-mcp-server:latest
+docker pull ghcr.io/zhaxg/db-mcp-server:latest
 
 # Run with mounted config file
 docker run -p 9092:9092 \
   -v $(pwd)/config.json:/app/my-config.json \
   -e TRANSPORT_MODE=sse \
   -e CONFIG_PATH=/app/my-config.json \
-  freepeak/db-mcp-server
+  ghcr.io/zhaxg/db-mcp-server
 ```
 
 > **Note**: Mount to `/app/my-config.json` as the container has a default file at `/app/config.json`.

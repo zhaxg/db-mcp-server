@@ -2,7 +2,7 @@
 package logger
 
 import (
-	"github.com/FreePeak/db-mcp-server/internal/logger"
+	"github.com/zhaxg/db-mcp-server/internal/logger"
 )
 
 // Debug logs a debug message

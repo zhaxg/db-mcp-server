@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/FreePeak/db-mcp-server/pkg/db"
+	"github.com/zhaxg/db-mcp-server/pkg/db"
 )
 
 func main() {

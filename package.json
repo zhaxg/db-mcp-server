@@ -1,5 +1,5 @@
 {
-  "name": "@freepeak/db-mcp-server",
+  "name": "@zhaxg/db-mcp-server",
   "version": "1.6.3",
   "description": "Multi-database MCP server - provides AI assistants with structured database access to MySQL, PostgreSQL, SQLite, and TimescaleDB",
   "main": "bin/run.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/freepeak/db-mcp-server.git"
+    "url": "git+https://github.com/zhaxg/db-mcp-server.git"
   },
   "keywords": [
     "mcp",
@@ -27,12 +27,12 @@
     "claude",
     "cursor"
   ],
-  "author": "FreePeak",
+  "author": "zhaxg",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/freepeak/db-mcp-server/issues"
+    "url": "https://github.com/zhaxg/db-mcp-server/issues"
   },
-  "homepage": "https://github.com/freepeak/db-mcp-server#readme",
+  "homepage": "https://github.com/zhaxg/db-mcp-server#readme",
   "engines": {
     "node": ">=14.0.0"
   },

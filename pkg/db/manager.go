@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/FreePeak/db-mcp-server/pkg/logger"
+	"github.com/zhaxg/db-mcp-server/pkg/logger"
 )
 
 // DatabaseConnectionConfig represents a single database connection configuration
