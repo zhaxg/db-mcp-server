@@ -30,6 +30,9 @@ import (
 	pkgLogger "github.com/FreePeak/db-mcp-server/pkg/logger"
 )
 
+// version set by -ldflags -X main.version=vX.Y.Z during release builds
+var version = "1.0.0"
+
 // findConfigFile attempts to find config.json in the current directory or parent directories
 func findConfigFile() string {
 	// Default config file name
@@ -71,8 +74,14 @@ func main() {
 	logLevel := flag.String("log-level", "info", "Log level (debug, info, warn, error)")
 	lazyLoading := flag.Bool("lazy-loading", false, "Enable lazy loading: connections established on first use (recommended for 10+ databases)")
 	logDir := flag.String("log-dir", "", "Directory for log files (default: ./logs in current directory)")
+	showVersion := flag.Bool("version", false, "Print version and exit")
 	unifiedTools := flag.Bool("unified-tools", false, "Register unified tools with database parameter instead of per-database tools")
 	flag.Parse()
+
+	if *showVersion {
+		fmt.Printf("db_mcp_server version %s\n", version)
+		os.Exit(0)
+	}
 
 	// Initialize logger with custom log directory
 	logger.Initialize(logger.Config{Level: *logLevel, LogDir: *logDir})
