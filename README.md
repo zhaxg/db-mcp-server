@@ -28,6 +28,8 @@
 
 ## Overview
 
+> **本仓库 fork 自 [FreePeak/db-mcp-server](https://github.com/FreePeak/db-mcp-server)，感谢原作者的付出。后续改动完全由 xiaomi mimo 和 DeepSeek 驱动。**
+
 The DB MCP Server provides a standardized way for AI models to interact with multiple databases simultaneously. Built on the [FreePeak/cortex](https://github.com/FreePeak/cortex) framework, it enables AI assistants to execute SQL queries, manage transactions, explore schemas, and analyze performance across different database systems through a unified interface.
 
 ## Core Concepts
