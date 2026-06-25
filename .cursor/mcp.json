@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "db-mcp-server": {
+      "command": "db-mcp-server",
+      "args": ["-c", "/Users/linh.doan/work/harvey/freepeak/db-mcp-server/config.test.json"]
+    }
+  }
+}
