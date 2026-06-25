@@ -49,6 +49,12 @@ type DatabaseConnectionConfig struct {
 	StandbySessions bool   `json:"standby_sessions,omitempty"`
 	NLSLang         string `json:"nls_lang,omitempty"`
 
+	// MSSQL specific options
+	InstanceName    string `json:"instance_name,omitempty"`
+	Encrypt         bool   `json:"encrypt,omitempty"`
+	TrustServerCert bool   `json:"trust_server_cert,omitempty"`
+	AppName         string `json:"app_name,omitempty"`
+
 	// Connection pool settings
 	MaxOpenConns    int `json:"max_open_conns,omitempty"`
 	MaxIdleConns    int `json:"max_idle_conns,omitempty"`
@@ -111,8 +117,8 @@ func (m *Manager) LoadConfig(configJSON []byte) error {
 		if conn.ID == "" {
 			return fmt.Errorf("database connection ID cannot be empty")
 		}
-		if conn.Type != "mysql" && conn.Type != "postgres" && conn.Type != "oracle" && conn.Type != "sqlite" {
-			return fmt.Errorf("unsupported database type for connection %s: %s (must be mysql, postgres, oracle, or sqlite)", conn.ID, conn.Type)
+		if conn.Type != "mysql" && conn.Type != "postgres" && conn.Type != "oracle" && conn.Type != "sqlite" && conn.Type != "mssql" {
+			return fmt.Errorf("unsupported database type for connection %s: %s (must be mysql, postgres, oracle, sqlite, or mssql)", conn.ID, conn.Type)
 		}
 
 		// SQLite-specific validation
@@ -234,6 +240,13 @@ func buildDatabaseConfig(cfg DatabaseConnectionConfig) Config {
 			dbConfig.JournalMode = SQLiteJournalMode(cfg.JournalMode)
 		}
 		dbConfig.UseModerncDriver = cfg.UseModerncDriver
+	case "mssql":
+		dbConfig.InstanceName = cfg.InstanceName
+		dbConfig.Encrypt = cfg.Encrypt
+		dbConfig.TrustServerCert = cfg.TrustServerCert
+		dbConfig.AppName = cfg.AppName
+		dbConfig.ConnectTimeout = cfg.ConnectTimeout
+		dbConfig.QueryTimeout = cfg.QueryTimeout
 	default:
 		// Default case - common configuration
 		dbConfig.ConnectTimeout = cfg.ConnectTimeout

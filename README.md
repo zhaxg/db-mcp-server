@@ -114,6 +114,7 @@ The server follows Clean Architecture principles with these layers:
 | PostgreSQL | ✅ Full Support (v9.6-17) | Queries, Transactions, Schema Analysis, Performance Insights |
 | SQLite     | ✅ Full Support           | File-based & In-memory databases, SQLCipher encryption support |
 | Oracle     | ✅ Full Support (10g-23c) | Queries, Transactions, Schema Analysis, RAC, Cloud Wallet, TNS |
+| MSSQL      | ✅ Full Support           | Queries, Transactions, Schema Analysis, Named Instances, Azure, Windows Auth |
 | TimescaleDB| ✅ Full Support           | Hypertables, Time-Series Queries, Continuous Aggregates, Compression, Retention Policies |
 
 ## Deployment Options
@@ -450,6 +451,51 @@ When multiple connection methods are configured, the following priority is used:
 1. **TNS Entry** (if `tns_entry` and `tns_admin` are configured)
 2. **Wallet** (if `wallet_location` is configured) - for Oracle Cloud
 3. **Standard** (host:port/service_name) - default method
+
+### MSSQL Configuration Examples
+
+#### Basic MSSQL Connection
+```json
+{
+  "id": "mssql_dev",
+  "type": "mssql",
+  "host": "localhost",
+  "port": 1433,
+  "name": "testdb",
+  "user": "sa",
+  "password": "your_password"
+}
+```
+
+#### MSSQL with Named Instance
+```json
+{
+  "id": "mssql_instance",
+  "type": "mssql",
+  "host": "sqlserver.company.com",
+  "instance_name": "SQLEXPRESS",
+  "name": "appdb",
+  "user": "app_user",
+  "password": "app_password",
+  "encrypt": true,
+  "trust_server_cert": true,
+  "app_name": "my-app"
+}
+```
+
+#### MSSQL Azure Database
+```json
+{
+  "id": "mssql_azure",
+  "type": "mssql",
+  "host": "my-server.database.windows.net",
+  "port": 1433,
+  "name": "mydb",
+  "user": "admin@my-server",
+  "password": "your-password",
+  "encrypt": true
+}
+```
 
 ## Available Tools
 

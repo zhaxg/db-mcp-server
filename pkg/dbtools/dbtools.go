@@ -68,6 +68,12 @@ type ConnectionConfig struct {
 	JournalMode      string `json:"journal_mode,omitempty"`       // Journal mode for SQLite
 	UseModerncDriver bool   `json:"use_modernc_driver,omitempty"` // Use modernc.org/sqlite driver instead of mattn/go-sqlite3
 
+	// MSSQL specific options
+	InstanceName    string `json:"instance_name,omitempty"`       // SQL Server named instance
+	Encrypt         bool   `json:"encrypt,omitempty"`             // Force encryption
+	TrustServerCert bool   `json:"trust_server_cert,omitempty"`   // Trust server certificate
+	AppName         string `json:"app_name,omitempty"`            // Application name for SQL Server
+
 	// Oracle specific options
 	ServiceName     string `json:"service_name,omitempty"`
 	SID             string `json:"sid,omitempty"`
@@ -1044,6 +1050,8 @@ func handleSchemaForDatabase(ctx context.Context, _ map[string]interface{}, dbID
 		dbType = "mysql"
 	case "postgres":
 		dbType = "postgres"
+	case "sqlserver":
+		dbType = "mssql"
 	default:
 		dbType = "unknown"
 	}
@@ -1076,6 +1084,8 @@ func getBasicSchemaInfo(ctx context.Context, db db.Database, dbID, dbType string
 		query = "SHOW TABLES"
 	case "postgres":
 		query = "SELECT tablename AS TABLE_NAME FROM pg_catalog.pg_tables WHERE schemaname NOT IN ('pg_catalog', 'information_schema')"
+	case "mssql":
+		query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'"
 	default:
 		// Generic query that might work
 		query = "SELECT name FROM sqlite_master WHERE type='table'"

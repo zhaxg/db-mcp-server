@@ -78,6 +78,19 @@ func (f *SQLiteQueryFactory) GetTablesQueries() []string {
 	}
 }
 
+// MSSQLQueryFactory creates queries for SQL Server
+type MSSQLQueryFactory struct{}
+
+// GetTablesQueries returns table queries for SQL Server
+func (f *MSSQLQueryFactory) GetTablesQueries() []string {
+	return []string{
+		// Primary: user tables
+		"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG = DB_NAME()",
+		// Fallback: all tables
+		"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'",
+	}
+}
+
 // GenericQueryFactory creates generic queries for unknown database types
 type GenericQueryFactory struct{}
 
@@ -100,6 +113,8 @@ func NewQueryFactory(dbType string) QueryFactory {
 		return &OracleQueryFactory{}
 	case "sqlite", "sqlite3":
 		return &SQLiteQueryFactory{}
+	case "mssql":
+		return &MSSQLQueryFactory{}
 	default:
 		logger.Warn("Unknown database type: %s, will use generic query factory", dbType)
 		return &GenericQueryFactory{}

@@ -20,6 +20,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	_ "github.com/sijms/go-ora/v2"
 	_ "modernc.org/sqlite"
+	_ "github.com/denisenkom/go-mssqldb"
 )
 
 // Common database errors
@@ -94,6 +95,12 @@ type Config struct {
 	StandbySessions bool   // Allow connections to standby database
 	NLSLang         string // NLS_LANG setting (e.g., "AMERICAN_AMERICA.AL32UTF8")
 
+	// MSSQL specific options
+	InstanceName    string // SQL Server named instance
+	Encrypt         bool   // Force encryption (default true for Azure)
+	TrustServerCert bool   // Trust server certificate
+	AppName         string // Application name for SQL Server
+
 	// Connection pool settings
 	MaxOpenConns    int
 	MaxIdleConns    int
@@ -117,6 +124,14 @@ func (c *Config) SetDefaults() {
 	}
 	if c.Type == "postgres" && c.SSLMode == "" {
 		c.SSLMode = SSLDisable
+	}
+	if c.Type == "mssql" {
+		if c.Port == 0 {
+			c.Port = 1433
+		}
+		if c.AppName == "" {
+			c.AppName = "db_mcp_server"
+		}
 	}
 	if c.Type == "oracle" {
 		if c.Port == 0 {
@@ -375,6 +390,60 @@ func addOracleOptions(connStr string, config Config) string {
 	return connStr
 }
 
+// buildMSSQLConnStr builds a SQL Server connection string with all options
+func buildMSSQLConnStr(config Config) string {
+	// Use sqlserver:// URL format
+	var sb strings.Builder
+
+	sb.WriteString("sqlserver://")
+
+	if config.User != "" {
+		sb.WriteString(url.QueryEscape(config.User))
+		if config.Password != "" {
+			sb.WriteString(":")
+			sb.WriteString(url.QueryEscape(config.Password))
+		}
+		sb.WriteString("@")
+	}
+
+	sb.WriteString(config.Host)
+	if config.Port > 0 {
+		sb.WriteString(fmt.Sprintf(":%d", config.Port))
+	}
+
+	if config.InstanceName != "" {
+		sb.WriteString(fmt.Sprintf("/%s", config.InstanceName))
+	}
+
+	if config.Name != "" {
+		sb.WriteString(fmt.Sprintf("?database=%s", url.QueryEscape(config.Name)))
+	} else {
+		sb.WriteString("?database=master")
+	}
+
+	// Add connection timeout
+	sb.WriteString(fmt.Sprintf("&connection+timeout=%d", config.ConnectTimeout))
+
+	// Encrypt setting
+	if config.Encrypt {
+		sb.WriteString("&encrypt=true")
+	} else {
+		sb.WriteString("&encrypt=false")
+	}
+
+	// Trust server certificate
+	if config.TrustServerCert {
+		sb.WriteString("&trust+server+certificate=true")
+	}
+
+	// Application name
+	if config.AppName != "" {
+		sb.WriteString(fmt.Sprintf("&app+name=%s", url.QueryEscape(config.AppName)))
+	}
+
+	return sb.String()
+}
+
 // buildSQLiteConnStr builds a SQLite connection string with all options
 func buildSQLiteConnStr(config Config) string {
 	// Validate and clean the database path
@@ -467,6 +536,9 @@ func NewDatabase(config Config) (Database, error) {
 			driverName = "sqlite3"
 		}
 		dsn = buildSQLiteConnStr(config)
+	case "mssql":
+		driverName = "sqlserver"
+		dsn = buildMSSQLConnStr(config)
 	default:
 		return nil, fmt.Errorf("unsupported database type: %s", config.Type)
 	}
