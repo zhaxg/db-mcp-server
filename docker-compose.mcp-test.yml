@@ -13,4 +13,4 @@ services:
     # Use this for debugging
     command: ["bash"]
     # Use this for actual MCP proxy execution
-    # command: ["mcp-proxy","/app/server-linux","-t","stdio","-no-log","--stdio"] 
+    # command: ["mcp-proxy","/app/db_mcp_server-linux","-t","stdio","-no-log","--stdio"]

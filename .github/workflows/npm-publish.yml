@@ -54,19 +54,19 @@ jobs:
           mkdir -p release
 
           # macOS amd64
-          GOOS=darwin GOARCH=amd64 go build -o release/db-mcp-server-darwin-amd64 -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
+          GOOS=darwin GOARCH=amd64 go build -o release/db_mcp_server-darwin-amd64 -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
 
           # macOS arm64
-          GOOS=darwin GOARCH=arm64 go build -o release/db-mcp-server-darwin-arm64 -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
+          GOOS=darwin GOARCH=arm64 go build -o release/db_mcp_server-darwin-arm64 -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
 
           # Linux amd64
-          GOOS=linux GOARCH=amd64 go build -o release/db-mcp-server-linux-amd64 -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
+          GOOS=linux GOARCH=amd64 go build -o release/db_mcp_server-linux-amd64 -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
 
           # Linux arm64
-          GOOS=linux GOARCH=arm64 go build -o release/db-mcp-server-linux-arm64 -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
+          GOOS=linux GOARCH=arm64 go build -o release/db_mcp_server-linux-arm64 -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
 
           # Windows amd64
-          GOOS=windows GOARCH=amd64 go build -o release/db-mcp-server-windows-amd64.exe -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
+          GOOS=windows GOARCH=amd64 go build -o release/db_mcp_server-windows-amd64.exe -ldflags="-s -w -X main.version=$VERSION" ./cmd/server
 
       - name: Check if release already exists
         id: check_release
@@ -88,11 +88,11 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            release/db-mcp-server-darwin-amd64
-            release/db-mcp-server-darwin-arm64
-            release/db-mcp-server-linux-amd64
-            release/db-mcp-server-linux-arm64
-            release/db-mcp-server-windows-amd64.exe
+            release/db_mcp_server-darwin-amd64
+            release/db_mcp_server-darwin-arm64
+            release/db_mcp_server-linux-amd64
+            release/db_mcp_server-linux-arm64
+            release/db_mcp_server-windows-amd64.exe
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

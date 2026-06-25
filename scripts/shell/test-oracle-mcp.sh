@@ -32,7 +32,7 @@ echo ""
 echo -e "${YELLOW}Step 2: Initializing MCP connection...${NC}"
 INIT_REQUEST='{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "0.1.0", "capabilities": {}, "clientInfo": {"name": "test-client", "version": "1.0"}}}'
 
-INIT_RESPONSE=$(echo "$INIT_REQUEST" | ./bin/db-mcp-server -t stdio -c config.json 2>/dev/null | grep -v "^20" | head -1)
+INIT_RESPONSE=$(echo "$INIT_REQUEST" | ./bin/db_mcp_server -t stdio -c config.json 2>/dev/null | grep -v "^20" | head -1)
 
 if echo "$INIT_RESPONSE" | grep -q "serverInfo"; then
     echo -e "${GREEN}✓ MCP server initialized successfully${NC}"
@@ -47,7 +47,7 @@ echo ""
 echo -e "${YELLOW}Step 3: Listing available Oracle tools...${NC}"
 LIST_TOOLS='{"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}}'
 
-TOOLS_RESPONSE=$(echo -e "$INIT_REQUEST\n$LIST_TOOLS" | ./bin/db-mcp-server -t stdio -c config.json 2>/dev/null | grep -v "^20" | tail -1)
+TOOLS_RESPONSE=$(echo -e "$INIT_REQUEST\n$LIST_TOOLS" | ./bin/db_mcp_server -t stdio -c config.json 2>/dev/null | grep -v "^20" | tail -1)
 
 # Extract Oracle tools
 ORACLE_TOOLS=$(echo "$TOOLS_RESPONSE" | grep -o "oracle_dev" | sort -u)
@@ -68,7 +68,7 @@ echo ""
 echo -e "${YELLOW}Step 4: Testing schema query on Oracle DB...${NC}"
 SCHEMA_REQUEST='{"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "schema_oracle_dev", "arguments": {"operation": "list_tables"}}}'
 
-SCHEMA_RESPONSE=$(echo -e "$INIT_REQUEST\n$SCHEMA_REQUEST" | ./bin/db-mcp-server -t stdio -c config.json 2>/dev/null | grep -v "^20" | tail -1)
+SCHEMA_RESPONSE=$(echo -e "$INIT_REQUEST\n$SCHEMA_REQUEST" | ./bin/db_mcp_server -t stdio -c config.json 2>/dev/null | grep -v "^20" | tail -1)
 
 if echo "$SCHEMA_RESPONSE" | grep -q "result"; then
     echo -e "${GREEN}✓ Schema query successful${NC}"

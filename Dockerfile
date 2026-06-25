@@ -28,7 +28,7 @@ RUN apk add --no-cache ca-certificates tzdata bash netcat-openbsd bind-tools ipu
 WORKDIR /app
 
 # Copy the built binary from the builder stage
-COPY --from=builder /app/bin/server /app/server
+COPY --from=builder /app/bin/db_mcp_server /app/db_mcp_server
 
 # Copy default config file
 COPY config.json /app/config.json
@@ -48,7 +48,7 @@ EXPOSE 9092
 VOLUME ["/app/logs"]
 
 # Start the MCP server with proper configuration
-CMD ["/bin/bash", "-c", "/app/server -t ${TRANSPORT_MODE} -p ${SERVER_PORT} -c ${CONFIG_PATH}"]
+CMD ["/bin/bash", "-c", "/app/db_mcp_server -t ${TRANSPORT_MODE} -p ${SERVER_PORT} -c ${CONFIG_PATH}"]
 
 # You can override the port by passing it as a command-line argument
 # docker run -p 8080:8080 db-mcp-server -port 8080 

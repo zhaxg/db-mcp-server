@@ -26,7 +26,7 @@ if docker ps --filter "name=db-mcp-oracle-test" --format "{{.Names}}" | grep -q 
 EOF
 
     # Run the test
-    RESULT=$(cat /tmp/mcp-test.json | ./bin/db-mcp-server -t stdio -c config.oracle-only.json 2>/dev/null | grep -v "^20")
+    RESULT=$(cat /tmp/mcp-test.json | ./bin/db_mcp_server -t stdio -c config.oracle-only.json 2>/dev/null | grep -v "^20")
     
     # Check for Oracle tools
     if echo "$RESULT" | grep -q "oracle_dev"; then

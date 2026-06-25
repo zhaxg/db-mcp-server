@@ -21,7 +21,7 @@ echo '  {
       "db-mcp-server": {
         "type": "local",
         "command": [
-          "/Users/linh.doan/work/harvey/freepeak/db-mcp-server/bin/db-mcp-server",
+          "/Users/linh.doan/work/harvey/freepeak/db-mcp-server/bin/db_mcp_server",
           "-t", "stdio",
           "-c", "/Users/linh.doan/work/harvey/freepeak/db-mcp-server/config.json"
         ],

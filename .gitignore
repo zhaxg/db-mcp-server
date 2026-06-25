@@ -1,6 +1,6 @@
 # Specific binary files
-server
-server-linux
+db_mcp_server
+db_mcp_server-linux
 multidb
 multidb-linux
 /bin/*

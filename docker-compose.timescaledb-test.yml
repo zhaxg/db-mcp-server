@@ -35,7 +35,7 @@ services:
       [
         "/bin/sh",
         "-c",
-        "chmod +x /app/wait-for-it.sh && /app/wait-for-it.sh timescaledb 5432 30 && /app/server -t sse -c /app/config.json",
+        "chmod +x /app/wait-for-it.sh && /app/wait-for-it.sh timescaledb 5432 30 && /app/db_mcp_server -t sse -c /app/config.json",
       ]
     depends_on:
       timescaledb:

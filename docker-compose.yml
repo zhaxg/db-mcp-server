@@ -13,7 +13,7 @@ services:
       [
         "/bin/sh",
         "-c",
-        "chmod +x /app/wait-for-it.sh && /app/wait-for-it.sh mysql1 3306 30 && /app/wait-for-it.sh mysql2 3306 30 && /app/wait-for-it.sh postgres1 5432 30 && /app/wait-for-it.sh postgres3 5432 30 && /app/server -t sse -c /app/config.json",
+        "chmod +x /app/wait-for-it.sh && /app/wait-for-it.sh mysql1 3306 30 && /app/wait-for-it.sh mysql2 3306 30 && /app/wait-for-it.sh postgres1 5432 30 && /app/wait-for-it.sh postgres3 5432 30 && /app/db_mcp_server -t sse -c /app/config.json",
       ]
     depends_on:
       mysql1:

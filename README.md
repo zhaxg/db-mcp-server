@@ -138,7 +138,7 @@ docker run -p 9092:9092 \
 
 ```bash
 # Run the server in STDIO mode
-./bin/server -t stdio -c config.json
+./bin/db_mcp_server -t stdio -c config.json
 ```
 
 For Cursor IDE integration, add to `.cursor/mcp.json`:
@@ -147,7 +147,7 @@ For Cursor IDE integration, add to `.cursor/mcp.json`:
 {
   "mcpServers": {
     "stdio-db-mcp-server": {
-      "command": "/path/to/db-mcp-server/server",
+      "command": "/path/to/db-mcp-server/db_mcp_server",
       "args": ["-t", "stdio", "-c", "/path/to/config.json"]
     }
   }
@@ -158,10 +158,10 @@ For Cursor IDE integration, add to `.cursor/mcp.json`:
 
 ```bash
 # Default configuration (localhost:9092)
-./bin/server -t sse -c config.json
+./bin/db_mcp_server -t sse -c config.json
 
 # Custom host and port
-./bin/server -t sse -host 0.0.0.0 -port 8080 -c config.json
+./bin/db_mcp_server -t sse -host 0.0.0.0 -port 8080 -c config.json
 ```
 
 Client connection endpoint: `http://localhost:9092/sse`
@@ -177,7 +177,7 @@ cd db-mcp-server
 make build
 
 # Run the server
-./bin/server -t sse -c config.json
+./bin/db_mcp_server -t sse -c config.json
 ```
 
 ## Configuration
@@ -247,23 +247,23 @@ Create a `config.json` file with your database connections:
 
 ```bash
 # Basic syntax
-./bin/server -t <transport> -c <config-file>
+./bin/db_mcp_server -t <transport> -c <config-file>
 
 # SSE transport options
-./bin/server -t sse -host <hostname> -port <port> -c <config-file>
+./bin/db_mcp_server -t sse -host <hostname> -port <port> -c <config-file>
 
 # Lazy loading mode (recommended for 10+ databases)
-./bin/server -t stdio -c <config-file> --lazy-loading
+./bin/db_mcp_server -t stdio -c <config-file> --lazy-loading
 
 # Customize log directory (useful for multi-project setups)
-./bin/server -t stdio -c <config-file> -log-dir /tmp/db-mcp-logs
+./bin/db_mcp_server -t stdio -c <config-file> -log-dir /tmp/db-mcp-logs
 
 # Inline database configuration
-./bin/server -t stdio -db-config '{"connections":[...]}'
+./bin/db_mcp_server -t stdio -db-config '{"connections":[...]}'
 
 # Environment variable configuration
 export DB_CONFIG='{"connections":[...]}'
-./bin/server -t stdio
+./bin/db_mcp_server -t stdio
 ```
 
 **Available Flags:**
@@ -590,7 +590,7 @@ query_oracle_dev("SELECT employee_id, salary, RANK() OVER (ORDER BY salary DESC)
 Enable verbose logging for troubleshooting:
 
 ```bash
-./bin/server -t sse -c config.json -v
+./bin/db_mcp_server -t sse -c config.json -v
 ```
 
 ## Testing

@@ -2,8 +2,8 @@
 
 # Build the server
 build:
-	CGO_ENABLE=0 go build -o ./bin/server cmd/server/main.go
-	CGO_ENABLE=0 GOOS=linux GOARCH=amd64 go build -o ./bin/server-linux cmd/server/main.go
+	CGO_ENABLE=0 go build -o ./bin/db_mcp_server cmd/server/main.go
+	CGO_ENABLE=0 GOOS=linux GOARCH=amd64 go build -o ./bin/db_mcp_server-linux cmd/server/main.go
 
 build-multidb:
 	CGO_ENABLE=0 go build -o ./multidb cmd/server/main.go
@@ -13,11 +13,11 @@ build-example:
 
 # Run the server in stdio mode
 run-stdio: build
-	TRANSPORT_MODE=stdio ./bin/server
+	TRANSPORT_MODE=stdio ./bin/db_mcp_server
 
 # Run the server in SSE mode
 run-sse: clean build
-	TRANSPORT_MODE=sse ./bin/server -t sse -p 9090 -h 127.0.0.1 -c config.json
+	TRANSPORT_MODE=sse ./bin/db_mcp_server -t sse -p 9090 -h 127.0.0.1 -c config.json
 
 # Build and run the example client
 client:
@@ -63,7 +63,8 @@ test-coverage:
 
 # Clean build artifacts
 clean:
-	rm -f server server-linux mcp-client mcp-simple-client
+	rm -f db_mcp_server db_mcp_server-linux mcp-client mcp-simple-client
+	rm -f bin/db_mcp_server bin/db_mcp_server-linux
 	rm -f coverage.out coverage.html coverage.txt
 	# lsof -i :9090 | grep LISTEN | awk '{print $2}' | xargs kill -9
 
@@ -176,11 +177,11 @@ npm-release:
 	@VERSION=$${VERSION:-$$(node -p "require('./package.json').version")}; \
 	echo "Version: $$VERSION"; \
 	mkdir -p release; \
-	GOOS=darwin GOARCH=amd64 go build -o release/db-mcp-server-darwin-amd64 -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
-	GOOS=darwin GOARCH=arm64 go build -o release/db-mcp-server-darwin-arm64 -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
-	GOOS=linux GOARCH=amd64 go build -o release/db-mcp-server-linux-amd64 -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
-	GOOS=linux GOARCH=arm64 go build -o release/db-mcp-server-linux-arm64 -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
-	GOOS=windows GOARCH=amd64 go build -o release/db-mcp-server-windows-amd64.exe -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
+	GOOS=darwin GOARCH=amd64 go build -o release/db_mcp_server-darwin-amd64 -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
+	GOOS=darwin GOARCH=arm64 go build -o release/db_mcp_server-darwin-arm64 -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
+	GOOS=linux GOARCH=amd64 go build -o release/db_mcp_server-linux-amd64 -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
+	GOOS=linux GOARCH=arm64 go build -o release/db_mcp_server-linux-arm64 -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
+	GOOS=windows GOARCH=amd64 go build -o release/db_mcp_server-windows-amd64.exe -ldflags="-s -w -X main.version=$$VERSION" ./cmd/server; \
 	echo "Release binaries built in release/ directory"
 
 # Publish to npm (requires NPM_TOKEN to be set)
@@ -230,7 +231,7 @@ npm-test-local:
 	@echo "Testing npm package locally..."
 	@echo "Building local binary first..."
 	@mkdir -p bin; \
-	go build -o bin/db-mcp-server ./cmd/server/main.go; \
+	go build -o bin/db_mcp_server ./cmd/server/main.go; \
 	rm -rf /tmp/db-mcp-test; \
 	mkdir -p /tmp/db-mcp-test; \
 	npm pack; \
@@ -240,5 +241,5 @@ npm-test-local:
 	echo "\n=== Package created at /tmp/db-mcp-test/ ==="; \
 	echo "To test installation globally, run:"; \
 	echo "  npm install -g /tmp/db-mcp-test/*.tgz"; \
-	echo "  db-mcp-server --help"
+	echo "  db_mcp_server --help"
 

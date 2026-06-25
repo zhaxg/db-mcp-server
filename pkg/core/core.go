@@ -8,5 +8,5 @@ func Version() string {
 
 // Name returns the name of the package.
 func Name() string {
-	return "db-mcp-server"
+	return "db_mcp_server"
 }
