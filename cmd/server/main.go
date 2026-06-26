@@ -31,7 +31,7 @@ import (
 )
 
 // version set by -ldflags -X main.version=vX.Y.Z during release builds
-var version = "1.0.0"
+var version = "1.0.1"
 
 // findConfigFile attempts to find config.json in the current directory or parent directories
 func findConfigFile() string {

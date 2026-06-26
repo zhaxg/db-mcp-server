@@ -169,7 +169,7 @@ func (c *Config) SetDefaults() {
 		}
 	}
 	if c.ConnectTimeout == 0 {
-		c.ConnectTimeout = 10 // Default 10 seconds
+		c.ConnectTimeout = 30 // Default 30 seconds
 	}
 	if c.QueryTimeout == 0 {
 		c.QueryTimeout = 30 // Default 30 seconds
